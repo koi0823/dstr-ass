@@ -9,7 +9,8 @@ using namespace std;
 
 int main() {
     int choice;
-
+    readCSV("/Users/klin/Documents/GitHub/dstr-ass/assignment/Annual number of dengue cases by state.csv");
+    readCSV("/Users/klin/Documents/GitHub/dstr-ass/assignment/Number of dengue fever cases weekly by state.csv");
     do {
         system("clear");
         cout << "=================================" << endl;
