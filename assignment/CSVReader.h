@@ -4,9 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "DoublyCircularLinkedList.h"
-#include "DynamicArray.h"
-#include "Case.h"
+#include <iostream>
 
 namespace CSVReader {
 
@@ -25,7 +23,9 @@ namespace CSVReader {
                 value.push_back(c);
             }
         }
-        result.push_back(value);  // Add the last value
+        if (!value.empty()) {  // Add the last value if it's not empty
+            result.push_back(value);
+        }
 
         return result;
     }
@@ -52,3 +52,4 @@ namespace CSVReader {
     }
 };
 
+#endif
