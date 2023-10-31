@@ -1,8 +1,9 @@
 #include <iostream>
 #include <string>
-#include "user.h"
-#include "doctor.h"
-#include "moh_admin.h"
+#include <limits>
+#include "User.h"
+#include "Doctor.h"
+#include "MOH_admin.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ int main() {
 
     do {
         cout << "=================================" << endl;
-        cout << "             Home Page           " << endl;
+        cout << "           Home Page           " << endl;
         cout << "=================================" << endl;
         cout << "1. User" << endl;
         cout << "2. Doctor" << endl;
@@ -31,16 +32,22 @@ int main() {
         } else {
             switch (choice) {
                 case 1:
-                    // User menu
-                    // Implement user-related functionality here
+                    {
+                        User user;
+                        user.login();
+                    }
                     break;
                 case 2:
-                    // Doctor menu
-                    // Implement doctor-related functionality here
+                    {
+                        Doctor doctor;
+                        doctor.login();
+                    }
                     break;
                 case 3:
-                    // MOH admin menu
-                    // Implement MOH admin-related functionality here
+                    {
+                        MOHAdmin mohAdmin;
+                        mohAdmin.login();
+                    }
                     break;
                 case 0:
                     cout << "Exiting program..." << endl;
