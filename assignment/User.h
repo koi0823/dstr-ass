@@ -11,6 +11,7 @@ public:
 
     void login() {
         string inputId, inputPass;
+        cout << "" <<endl;
         cout << "=================================" << endl;
         cout << "          Log in User" << endl;
         cout << "=================================" << endl;
@@ -29,6 +30,7 @@ public:
     void mainMenu() {
         int choice;
         do {
+            system("clear");
             cout << "=================================" << endl;
             cout << "        Main Menu (User)" << endl;
             cout << "=================================" << endl;

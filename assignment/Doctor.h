@@ -11,6 +11,7 @@ public:
 
     void login() {
         string id, pass; // Note: No need for std:: prefix
+        cout << "" <<endl;
         cout << "=================================" << endl;
         cout << "          Log in Doctor\n";
         cout << "=================================" << endl;
@@ -27,6 +28,7 @@ public:
     void mainMenu() {
         int choice;
         do {
+            system("clear");
             cout << "=================================" << endl;
             cout << "        Main Menu (Doctor)\n";
             cout << "=================================" << endl;

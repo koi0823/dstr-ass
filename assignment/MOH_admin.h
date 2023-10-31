@@ -11,6 +11,7 @@ public:
 
     void login() {
         string id, pass;
+        cout << "" <<endl;
         cout << "=================================" << endl;
         cout << "         Log in MOH admin" << endl;
         cout << "=================================" << endl;
@@ -27,6 +28,7 @@ public:
     void mainMenu() {
         int choice;
         do {
+            system("clear");
             cout << "=================================" << endl;
             cout << "      Main Menu (MOH_admin)" << endl;
             cout << "=================================" << endl;

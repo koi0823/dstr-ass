@@ -11,6 +11,7 @@ int main() {
     int choice;
 
     do {
+        system("clear");
         cout << "=================================" << endl;
         cout << "           Home Page           " << endl;
         cout << "=================================" << endl;
@@ -50,6 +51,8 @@ int main() {
                     }
                     break;
                 case 0:
+                    cout << "" << endl;
+                    cout << "Thank You for using our system" << endl;
                     cout << "Exiting program..." << endl;
                     break;
             }
