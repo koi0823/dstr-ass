@@ -15,9 +15,7 @@ void login() {
     bool loginSuccess = false;
 
     while (!loginSuccess) {
-        system("clear");  // Clear screen for Windows
-        // system("clear");  // Clear screen for Linux/Mac
-
+        system("clear");
         cout << "=================================" << endl;
         cout << "          Log in User" << endl;
         cout << "=================================" << endl;
