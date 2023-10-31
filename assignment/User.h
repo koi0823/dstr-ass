@@ -1,36 +1,61 @@
 #include <iostream>
 #include <string>
+#include <limits>
 
-using namespace std; // You already have this, no need for std::cout
+using namespace std;
 
 class User {
 public:
-    User() {
-        // Constructor implementation
-    }
+    User() : id(""), password("") {}
 
-    void login() {
-        string inputId, inputPass;
-        cout << "" <<endl;
+void login() {
+    string inputId, inputPass;
+    const string correctId = "1";
+    const string correctPass = "1111";
+    bool loginSuccess = false;
+
+    while (!loginSuccess) {
+        system("clear");  // Clear screen for Windows
+        // system("clear");  // Clear screen for Linux/Mac
+
         cout << "=================================" << endl;
         cout << "          Log in User" << endl;
         cout << "=================================" << endl;
-        cout << "ID: ";
-        cin >> inputId;
-        cout << "Pass: ";
-        cin >> inputPass;
 
-        // Here you should verify the id and password
-        // For now, let's assume it's always correct
-        setId(inputId);
-        setPassword(inputPass);
-        mainMenu();
+        while (true) {
+            cout << "ID: ";
+            cin >> inputId;
+
+            if (inputId == correctId) {
+                break;
+            } else {
+                cout << "Invalid ID. Please try again." << endl;
+            }
+        }
+
+        while (true) {
+            cout << "Pass: ";
+            cin >> inputPass;
+
+            if (inputPass == correctPass) {
+                loginSuccess = true;
+                setId(inputId);
+                setPassword(inputPass);
+                mainMenu();
+                break;
+            } else {
+                cout << "Invalid Password. Please try again." << endl;
+            }
+        }
     }
+}
 
     void mainMenu() {
         int choice;
         do {
             system("clear");
+            // system("clear");
+
             cout << "=================================" << endl;
             cout << "        Main Menu (User)" << endl;
             cout << "=================================" << endl;
@@ -65,24 +90,24 @@ public:
     }
 
     // Getter and Setter for id
-    void setId(const std::string& newId) {
+    void setId(const string& newId) {
         id = newId;
     }
-    std::string getId() const {
+    string getId() const {
         return id;
     }
 
     // Getter and Setter for password
-    void setPassword(const std::string& newPass) {
+    void setPassword(const string& newPass) {
         password = newPass;
     }
-    std::string getPassword() const {
+    string getPassword() const {
         return password;
     }
 
 private:
-    std::string id;
-    std::string password;
+    string id;
+    string password;
 
     void manageProfile() {
         // Implement manage profile User

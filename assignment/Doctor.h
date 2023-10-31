@@ -9,21 +9,48 @@ public:
         // Constructor implementation
     }
 
-    void login() {
-        string id, pass; // Note: No need for std:: prefix
-        cout << "" <<endl;
-        cout << "=================================" << endl;
-        cout << "          Log in Doctor\n";
-        cout << "=================================" << endl;
-        cout << "ID: ";
-        cin >> id;
-        cout << "Pass: ";
-        cin >> pass;
+void login() {
+    string inputId, inputPass;
+    const string correctId = "2";
+    const string correctPass = "2222";
+    bool loginSuccess = false;
 
-        // Here you should verify the id and password
-        // For now, let's assume it's always correct
-        mainMenu();
+    while (!loginSuccess) {
+        system("clear");  // Clear screen for Windows
+        // system("clear");  // Clear screen for Linux/Mac
+
+        cout << "=================================" << endl;
+        cout << "          Log in Doctor" << endl;
+        cout << "=================================" << endl;
+
+        while (true) {
+            cout << "ID: ";
+            cin >> inputId;
+
+            if (inputId == correctId) {
+                break;
+            } else {
+                cout << "Invalid ID. Please try again." << endl;
+            }
+        }
+
+        while (true) {
+            cout << "Pass: ";
+            cin >> inputPass;
+
+            if (inputPass == correctPass) {
+                loginSuccess = true;
+                setId(inputId);
+                setPassword(inputPass);
+                mainMenu();
+                break;
+            } else {
+                cout << "Invalid Password. Please try again." << endl;
+            }
+        }
     }
+}
+
 
     void mainMenu() {
         int choice;
@@ -64,6 +91,22 @@ public:
                     cout << "Invalid choice. Please enter a number between 1 and 6." << endl;
             }
         } while (choice != 6);
+    }
+
+    void setId(const string& newId) {
+        id = newId;
+    }
+
+    string getId() const {
+        return id;
+    }
+
+    void setPassword(const string& newPassword) {
+        password = newPassword;
+    }
+
+    string getPassword() const {
+        return password;
     }
 
 private:

@@ -9,21 +9,48 @@ public:
         // Constructor implementation
     }
 
-    void login() {
-        string id, pass;
-        cout << "" <<endl;
+void login() {
+    string inputId, inputPass;
+    const string correctId = "3";
+    const string correctPass = "3333";
+    bool loginSuccess = false;
+
+    while (!loginSuccess) {
+        system("clear");  // Clear screen for Windows
+        // system("clear");  // Clear screen for Linux/Mac
+
         cout << "=================================" << endl;
         cout << "         Log in MOH admin" << endl;
         cout << "=================================" << endl;
-        cout << "ID: ";
-        cin >> id;
-        cout << "Pass: ";
-        cin >> pass;
 
-        // Here you should verify the id and password
-        // For now, let's assume it's always correct
-        mainMenu();
+        while (true) {
+            cout << "ID: ";
+            cin >> inputId;
+
+            if (inputId == correctId) {
+                break;
+            } else {
+                cout << "Invalid ID. Please try again." << endl;
+            }
+        }
+
+        while (true) {
+            cout << "Pass: ";
+            cin >> inputPass;
+
+            if (inputPass == correctPass) {
+                loginSuccess = true;
+                setId(inputId);
+                setPassword(inputPass);
+                mainMenu();
+                break;
+            } else {
+                cout << "Invalid Password. Please try again." << endl;
+            }
+        }
     }
+}
+
 
     void mainMenu() {
         int choice;
@@ -60,6 +87,22 @@ public:
                     cout << "Invalid choice. Please enter a number between 1 and 5." << endl;
             }
         } while (choice != 5);
+    }
+
+    void setId(const string& newId) {
+        id = newId;
+    }
+
+    string getId() const {
+        return id;
+    }
+
+    void setPassword(const string& newPassword) {
+        password = newPassword;
+    }
+
+    string getPassword() const {
+        return password;
     }
 
 private:
