@@ -7,6 +7,7 @@
 using namespace std;
 
 struct AnnualDataNode {
+    string age;
     string state;
     int year;
     int numOfDengueCases;
@@ -23,42 +24,91 @@ public:
 
     AnnualDataList() : head(nullptr), tail(nullptr) {}
 
-public:
-    static AnnualDataList* getInstance() {
-        if (instance == nullptr) {
+    static AnnualDataList* getInstance(){
+        if(instance == nullptr){
             instance = new AnnualDataList();
         }
         return instance;
     }
 
-    // Insert
-    void insert(const string& state, int year, int numOfDengueCases) {
-        AnnualDataNode* newNode = new AnnualDataNode{state, year, numOfDengueCases, nullptr, nullptr};
+
+    void loadFromCSV(const string& file_path) {
+        ifstream file(file_path);
+        if (!file.is_open()) {
+            cerr << "Error opening file" << endl;
+            return;
+        }
+
+        string line;
+        vector<string> states;
+
+        int row_index = 0;
+        while (getline(file, line)) {
+            istringstream sline(line);
+            string cell;
+            int col_index = 0;
+            string age, year;
+            int numOfDengueCases;
+
+            while (getline(sline, cell, ',')) {
+                if (row_index == 0) {
+                    if (col_index >= 2) {
+                        states.push_back(cell);
+                    }
+                } else {
+                    if (col_index == 0) {
+                        year = cell;
+                    } else if (col_index == 1) {
+                        age = cell;
+                    } else {
+                        numOfDengueCases = stoi(cell);
+                        string state = states[col_index - 2];
+                        insert(age, state, stoi(year), numOfDengueCases);
+                    }
+                }
+                col_index++;
+            }
+            row_index++;
+        }
+        file.close();
+    }
+
+    // Function to insert a new node
+    void insert(const string& age, const string& state, int year, int numOfDengueCases) {
+        // Create a new node
+        AnnualDataNode* newNode = new AnnualDataNode;
+        newNode->age = age;
+        newNode->state = state;
+        newNode->year = year;
+        newNode->numOfDengueCases = numOfDengueCases;
+        newNode->next = nullptr; // New node will be the last node, so next is null
+        newNode->prev = tail;    // Previous node is the current tail
+
+        // If the list is empty, make the new node both head and tail
         if (tail == nullptr) {
-            head = tail = newNode;
-            newNode->next = newNode;  // Point to itself to make the list circular
-            newNode->prev = newNode;
+            head = newNode;
+            tail = newNode;
         } else {
+            // Otherwise, add the new node to the end of the list and update the tail
             tail->next = newNode;
-            newNode->prev = tail;
-            newNode->next = head;  // Point to the head to make the list circular
-            head->prev = newNode;  // Update the previous of head node
             tail = newNode;
         }
     }
 
-    // Display (for demonstration)
     void display() {
         if (head == nullptr) {
-            cout << "List is empty." << endl;
+            cout << "The list is empty." << endl;
             return;
         }
+
         AnnualDataNode* current = head;
-        do {
-            cout << "State: " << current->state << ", Year: " << current->year
-                      << ", Dengue Cases: " << current->numOfDengueCases << endl;
+        while (current != nullptr) {
+            cout << "Year: " << current->year
+                 << ", Age: " << current->age
+                 << ", State: " << current->state
+                 << ", Number of Dengue Cases: " << current->numOfDengueCases << endl;
             current = current->next;
-        } while (current != head);
+        }
     }
 
     void increaseDengueCases(int year, const string& age, const string& state) {
@@ -100,69 +150,7 @@ public:
         return totalCases;
     }
 
-    void loadFromCSV(const string& filename) {
-        ifstream file(filename);
-        if (!file.is_open()) {
-            cerr << "Error opening file: " << filename << endl;
-            return;
-        }
-
-        string line;
-        getline(file, line);  // skip header line
-
-        while (getline(file, line)) {
-            istringstream iss(line);
-            vector<string> tokens;
-            string token;
-            while (getline(iss, token, ',')) {
-                tokens.push_back(token);
-            }
-
-            if (tokens.size() >= 3) {
-                string state = tokens[0];
-                int year = stoi(tokens[1]);
-                int numOfDengueCases = stoi(tokens[2]);
-                insert(state, year, numOfDengueCases);
-            }
-        }
-
-        file.close();
-    }
 };
 
 // Initializing the static instance
 AnnualDataList* AnnualDataList::instance = nullptr;
-
-// Basic Binary Search Tree Node Structure
-struct TreeNode {
-    int data;
-    TreeNode* left;
-    TreeNode* right;
-};
-
-class AnnualDataTree {
-public:
-    TreeNode* root;
-
-    AnnualDataTree() : root(nullptr) {}
-
-    // Insert (for demonstration)
-    void insert(int data) {
-        root = insertRec(root, data);
-    }
-
-private:
-    TreeNode* insertRec(TreeNode* node, int data) {
-        if (node == nullptr) {
-            return new TreeNode{data, nullptr, nullptr};
-        }
-        if (data < node->data) {
-            node->left = insertRec(node->left, data);
-        } else if (data > node->data) {
-            node->right = insertRec(node->right, data);
-        }
-        return node;
-    }
-};
-
-#endif // ANNUALDATA_H
