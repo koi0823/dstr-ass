@@ -4,13 +4,30 @@
 #include "User.h"
 #include "Doctor.h"
 #include "MOH_admin.h"
+#include "LoadData.h"
+
 
 using namespace std;
 
 int main() {
+    LoadData loadData;
+    loadData.dataload();
     int choice;
-    
+
+    // Get the instance of WeeklyDataList and AnnualDataList
+    WeeklyDataList* weeklyDataList = WeeklyDataList::getInstance();
+    AnnualDataList* annualDataList = AnnualDataList::getInstance();
+
+    // Print Weekly Data
+    cout << "Weekly Data:" << endl;
+    weeklyDataList->display();
+
+    // Print Annual Data
+    cout << "Annual Data:" << endl;
+    annualDataList->display();
+
     do {
+
         system("clear");
         cout << "=================================" << endl;
         cout << "           Home Page           " << endl;

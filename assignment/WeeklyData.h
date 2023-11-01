@@ -7,7 +7,7 @@
 using namespace std;
 
 struct WeeklyDataNode {
-    std::string state;
+    string state;
     int year;
     int week;
     int numOfDengueCases;
@@ -33,7 +33,7 @@ public:
     }
 
     // Insert
-    void insert(const std::string& state, int year, int week, int numOfDengueCases) {
+    void insert(const string& state, int year, int week, int numOfDengueCases) {
         WeeklyDataNode* newNode = new WeeklyDataNode{state, year, week, numOfDengueCases, nullptr, nullptr};
         if (tail == nullptr) {
             head = tail = newNode;
@@ -48,10 +48,40 @@ public:
         }
     }
 
+    void loadFromCSV(const string& filename) {
+        ifstream file(filename);
+        if (!file.is_open()) {
+            cerr << "Error opening file: " << filename << endl;
+            return;
+        }
+
+        string line;
+        getline(file, line);  // skip header line
+
+        while (getline(file, line)) {
+            istringstream iss(line);
+            vector<string> tokens;
+            string token;
+            while (getline(iss, token, ',')) {
+                tokens.push_back(token);
+            }
+
+            if (tokens.size() >= 4) {
+                string state = tokens[0];
+                int year = stoi(tokens[1]);
+                int week = stoi(tokens[2]);
+                int numOfDengueCases = stoi(tokens[3]);
+                insert(state, year, week, numOfDengueCases);
+            }
+        }
+
+        file.close();
+    }
+
     // Display (for demonstration)
     void display() {
         if (head == nullptr) {
-            cout << "List is empty." << std::endl;
+            cout << "List is empty." << endl;
             return;
         }
         WeeklyDataNode* current = head;

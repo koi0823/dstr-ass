@@ -61,12 +61,12 @@ public:
         } while (current != head);
     }
 
-    void increaseDengueCases(int year, const std::string& age, const std::string& state) {
+    void increaseDengueCases(int year, const string& age, const string& state) {
         AnnualDataNode* current = head;
         while (current != nullptr) {
             if (current->year == year && current->age == age && current->state == state) {
                 current->numOfDengueCases++;
-                std::cout << "Dengue cases updated successfully. New number of cases: " << current->numOfDengueCases << "\n";
+                cout << "Dengue cases updated successfully. New number of cases: " << current->numOfDengueCases << "\n";
                 return;
             }
             current = current->next;
@@ -74,11 +74,11 @@ public:
 
         // If no matching data found, create a new node
         insert(age, state, year, 1);
-        std::cout << "No matching data found. A new entry has been created with 1 dengue case.\n";
+        cout << "No matching data found. A new entry has been created with 1 dengue case.\n";
     }
 
     // Other functions (e.g., display, search, delete) go here
-    int caseBasedOnAgeAndState(const std::string& inputage, const std::string& inputstate) {
+    int caseBasedOnAgeAndState(const string& inputage, const string& inputstate) {
         int totalCases = 0;
         AnnualDataNode* current = head;
         while (current != nullptr) {
@@ -98,6 +98,35 @@ public:
             current = current->next;
         }
         return totalCases;
+    }
+
+    void loadFromCSV(const string& filename) {
+        ifstream file(filename);
+        if (!file.is_open()) {
+            cerr << "Error opening file: " << filename << endl;
+            return;
+        }
+
+        string line;
+        getline(file, line);  // skip header line
+
+        while (getline(file, line)) {
+            istringstream iss(line);
+            vector<string> tokens;
+            string token;
+            while (getline(iss, token, ',')) {
+                tokens.push_back(token);
+            }
+
+            if (tokens.size() >= 3) {
+                string state = tokens[0];
+                int year = stoi(tokens[1]);
+                int numOfDengueCases = stoi(tokens[2]);
+                insert(state, year, numOfDengueCases);
+            }
+        }
+
+        file.close();
     }
 };
 
