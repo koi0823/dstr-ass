@@ -3,30 +3,30 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <memory>
 
 using namespace std;
 
 struct AnnualDataNode {
     string age, state;
     int year, numOfDengueCases;
-    shared_ptr<AnnualDataNode> next;
-    weak_ptr<AnnualDataNode> prev;
+    AnnualDataNode* next;
+    AnnualDataNode* prev;
 
     AnnualDataNode(const string& age, const string& state, int year, int numOfDengueCases)
-        : age(age), state(state), year(year), numOfDengueCases(numOfDengueCases), next(nullptr), prev() {}
+        : age(age), state(state), year(year), numOfDengueCases(numOfDengueCases), next(nullptr), prev(nullptr) {}
 };
 
 class AnnualDataList {
 public:
-    shared_ptr<AnnualDataNode> head, tail;
-    static shared_ptr<AnnualDataList> instance;
+    AnnualDataNode* head;
+    AnnualDataNode* tail;
+    static AnnualDataList* instance;
 
     AnnualDataList() : head(nullptr), tail(nullptr) {}
 
-    static shared_ptr<AnnualDataList> getInstance() {
+    static AnnualDataList* getInstance() {
         if (!instance) {
-            instance = make_shared<AnnualDataList>();
+            instance = new AnnualDataList();
         }
         return instance;
     }
@@ -69,7 +69,7 @@ public:
     }
 
     void insert(const string& age, const string& state, int year, int numOfDengueCases) {
-        shared_ptr<AnnualDataNode> newNode = make_shared<AnnualDataNode>(age, state, year, numOfDengueCases);
+        AnnualDataNode* newNode = new AnnualDataNode(age, state, year, numOfDengueCases);
         if (!tail) {
             head = tail = newNode;
         } else {
@@ -85,7 +85,7 @@ public:
             return;
         }
 
-        for (shared_ptr<AnnualDataNode> current = head; current; current = current->next) {
+        for (AnnualDataNode* current = head; current; current = current->next) {
             cout << "Year: " << current->year
                  << ", Age: " << current->age
                  << ", State: " << current->state
@@ -94,7 +94,7 @@ public:
     }
 
     void increaseDengueCases(int year, const string& age, const string& state) {
-        for (shared_ptr<AnnualDataNode> current = head; current; current = current->next) {
+        for (AnnualDataNode* current = head; current; current = current->next) {
             if (current->year == year && current->age == age && current->state == state) {
                 current->numOfDengueCases++;
                 cout << "Dengue cases updated successfully. New number of cases: " << current->numOfDengueCases << "\n";
@@ -109,7 +109,7 @@ public:
 
     int caseBasedOnAgeAndState(const string& inputage, const string& inputstate) const {
         int totalCases = 0;
-        for (shared_ptr<AnnualDataNode> current = head; current; current = current->next) {
+        for (AnnualDataNode* current = head; current; current = current->next) {
             if (current->age == inputage && current->state == inputstate) {
                 totalCases += current->numOfDengueCases;
             }
@@ -119,7 +119,7 @@ public:
 
     int getTotalDengueCasesForYear(int year) const {
         int totalCases = 0;
-        for (shared_ptr<AnnualDataNode> current = head; current; current = current->next) {
+        for (AnnualDataNode* current = head; current; current = current->next) {
             if (current->year == year) {
                 totalCases += current->numOfDengueCases;
             }
@@ -128,4 +128,4 @@ public:
     }
 };
 
-shared_ptr<AnnualDataList> AnnualDataList::instance = nullptr;
+AnnualDataList* AnnualDataList::instance = nullptr;

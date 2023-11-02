@@ -3,36 +3,36 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <memory>
 
 using namespace std;
 
 struct WeeklyDataNode {
     string state;
     int year, week, numOfDengueCases;
-    shared_ptr<WeeklyDataNode> next;
-    weak_ptr<WeeklyDataNode> prev;
+    WeeklyDataNode* next;
+    WeeklyDataNode* prev;
 
     WeeklyDataNode(const string& state, int year, int week, int numOfDengueCases)
-        : state(state), year(year), week(week), numOfDengueCases(numOfDengueCases), next(nullptr), prev() {}
+        : state(state), year(year), week(week), numOfDengueCases(numOfDengueCases), next(nullptr), prev(nullptr) {}
 };
 
 class WeeklyDataList {
 public:
-    shared_ptr<WeeklyDataNode> head, tail;
-    static shared_ptr<WeeklyDataList> instance;
+    WeeklyDataNode* head;
+    WeeklyDataNode* tail;
+    static WeeklyDataList* instance;
 
     WeeklyDataList() : head(nullptr), tail(nullptr) {}
 
-    static shared_ptr<WeeklyDataList> getInstance() {
+    static WeeklyDataList* getInstance() {
         if (!instance) {
-            instance = make_shared<WeeklyDataList>();
+            instance = new WeeklyDataList();
         }
         return instance;
     }
 
     void insert(const string& state, int year, int week, int numOfDengueCases) {
-        shared_ptr<WeeklyDataNode> newNode = make_shared<WeeklyDataNode>(state, year, week, numOfDengueCases);
+        WeeklyDataNode* newNode = new WeeklyDataNode(state, year, week, numOfDengueCases);
         if (!tail) {
             head = tail = newNode;
         } else {
@@ -82,7 +82,7 @@ public:
             return;
         }
 
-        shared_ptr<WeeklyDataNode> current = head;
+        WeeklyDataNode* current = head;
         while (current) {
             cout << "State: " << current->state
                  << ", Year: " << current->year
@@ -97,7 +97,7 @@ public:
         WeeklyDataList result;
         if (!head) return result;
 
-        shared_ptr<WeeklyDataNode> current = head;
+        WeeklyDataNode* current = head;
         while (current) {
             if (current->numOfDengueCases > threshold) {
                 result.insert(current->state, current->year, current->week, current->numOfDengueCases);
@@ -110,6 +110,14 @@ public:
     bool empty() const {
         return !head;
     }
+
+    ~WeeklyDataList() {
+        while (head) {
+            WeeklyDataNode* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
 };
 
-shared_ptr<WeeklyDataList> WeeklyDataList::instance = nullptr;
+WeeklyDataList* WeeklyDataList::instance = nullptr;

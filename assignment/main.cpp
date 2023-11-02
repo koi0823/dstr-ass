@@ -16,7 +16,7 @@ int main() {
 
     do {
 
-        // system("clear");
+        system("clear");
         cout << "=================================" << endl;
         cout << "           Home Page           " << endl;
         cout << "=================================" << endl;
