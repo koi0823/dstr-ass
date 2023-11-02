@@ -11,11 +11,8 @@ using namespace std;
 int main() {
     LoadData loadData;
     loadData.dataload();
-
     int choice;
-
     do {
-
         system("clear");
         cout << "=================================" << endl;
         cout << "           Home Page           " << endl;
