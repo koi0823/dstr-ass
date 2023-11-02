@@ -52,7 +52,6 @@ void login() {
         int choice;
         do {
             system("clear");
-            // system("clear");
 
             cout << "=================================" << endl;
             cout << "        Main Menu (User)" << endl;

@@ -31,42 +31,53 @@ public:
         return instance;
     }
 
-    void loadFromCSV(const string& file_path) {
-        ifstream file(file_path);
-        if (!file.is_open()) {
-            cerr << "Error opening file" << endl;
-            return;
-        }
-
-        string line;
-        vector<string> states;
-        int row_index = 0;
-
-        while (getline(file, line)) {
-            istringstream sline(line);
-            string cell;
-            int col_index = 0;
-            string age, state;
-            int year, numOfDengueCases;
-
-            while (getline(sline, cell, ',')) {
-                if (row_index == 0 && col_index >= 2) {
-                    states.push_back(cell);
-                } else if (col_index == 0) {
-                    year = stoi(cell);
-                } else if (col_index == 1) {
-                    age = cell;
-                } else {
-                    numOfDengueCases = stoi(cell);
-                    state = states[col_index - 2];
-                    insert(age, state, year, numOfDengueCases);
-                }
-                col_index++;
-            }
-            row_index++;
-        }
-        file.close();
+  void loadFromCSV(const string& file_path) {
+    ifstream file(file_path);
+    if (!file.is_open()) {
+        cerr << "Error opening file" << endl;
+        return;
     }
+
+    string line;
+    vector<string> states;
+    int row_index = 0;
+
+    while (getline(file, line)) {
+        istringstream sline(line);
+        string cell;
+        int col_index = 0;
+        string age, state;
+        int year, numOfDengueCases;
+
+        while (getline(sline, cell, ',')) {
+            if (row_index == 0 && col_index >= 2) {
+                states.push_back(cell);
+            } else if (col_index == 0) {
+                try {
+                    year = stoi(cell);
+                } catch (const std::invalid_argument& e) {
+                    cerr << "Invalid year: " << cell << endl;
+                    year = 0; // Handle the error by setting a default value.
+                }
+            } else if (col_index == 1) {
+                age = cell;
+            } else {
+                try {
+                    numOfDengueCases = stoi(cell);
+                } catch (const std::invalid_argument& e) {
+                    cerr << "Invalid number of dengue cases: " << cell << endl;
+                    numOfDengueCases = 0; // Handle the error by setting a default value.
+                }
+                state = states[col_index - 2];
+                insert(age, state, year, numOfDengueCases);
+            }
+            col_index++;
+        }
+        row_index++;
+    }
+    file.close();
+}
+
 
     void insert(const string& age, const string& state, int year, int numOfDengueCases) {
         AnnualDataNode* newNode = new AnnualDataNode(age, state, year, numOfDengueCases);
@@ -87,11 +98,19 @@ public:
 
         for (AnnualDataNode* current = head; current; current = current->next) {
             cout << "Year: " << current->year
-                 << ", Age: " << current->age
-                 << ", State: " << current->state
-                 << ", Number of Dengue Cases: " << current->numOfDengueCases << endl;
+                << ", Age: " << current->age
+                << ", State: " << current->state
+                << ", annual Dengue Cases: " << current->numOfDengueCases;
+
+            // Check if the "annual Dengue Cases" contains a line break character
+            if (current->numOfDengueCases >= 10) {
+                cout << "\n";
+            } else {
+                cout << endl;
+            }
         }
     }
+
 
     void increaseDengueCases(int year, const string& age, const string& state) {
         for (AnnualDataNode* current = head; current; current = current->next) {

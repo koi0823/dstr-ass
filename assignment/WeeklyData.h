@@ -62,11 +62,27 @@ public:
                 if (row_index == 0 && col_index >= 2) {
                     states.push_back(cell);
                 } else if (col_index == 0) {
-                    year = stoi(cell);
+                    try {
+                        year = stoi(cell);
+                    } catch (const std::invalid_argument& e) {
+                        cerr << "Invalid year: " << cell << endl;
+                        year = 0; // Handle the error by setting a default value.
+                    }
                 } else if (col_index == 1) {
-                    week = stoi(cell);
+                    try {
+                        week = stoi(cell);
+                        
+                    } catch (const std::invalid_argument& e) {
+                        cerr << "Invalid week: " << cell << endl;
+                        week = 0; // Handle the error by setting a default value.
+                    }
                 } else {
-                    numOfDengueCases = stoi(cell);
+                    try {
+                        numOfDengueCases = stoi(cell);
+                    } catch (const std::invalid_argument& e) {
+                        cerr << "Invalid number of dengue cases: " << cell << endl;
+                        numOfDengueCases = 0; // Handle the error by setting a default value.
+                    }
                     insert(states[col_index - 2], year, week, numOfDengueCases);
                 }
                 col_index++;
@@ -76,22 +92,30 @@ public:
         file.close();
     }
 
-    void display() const {
-        if (!head) {
-            cout << "The list is empty." << endl;
-            return;
+void display() const {
+    if (!head) {
+        cout << "The list is empty." << endl;
+        return;
+    }
+
+    WeeklyDataNode* current = head;
+    while (current) {
+        cout << "State: " << current->state
+             << ", Year: " << current->year
+             << ", Week: " << current->week
+             << ", Number Dengue Cases: " << current->numOfDengueCases;
+
+        // Check if the "Number Dengue Cases" value contains a line break character
+        if (current->numOfDengueCases >= 10) {
+            cout << "\n";
+        } else {
+            cout << endl;
         }
 
-        WeeklyDataNode* current = head;
-        while (current) {
-            cout << "State: " << current->state
-                 << ", Year: " << current->year
-                 << ", Week: " << current->week
-                 << ", Number of Dengue Cases: " << current->numOfDengueCases
-                 << endl;
-            current = current->next;
-        }
+        current = current->next;
     }
+}
+
 
     WeeklyDataList searchCasesMoreThan(int threshold) const {
         WeeklyDataList result;

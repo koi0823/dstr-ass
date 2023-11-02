@@ -13,7 +13,7 @@ int main() {
     loadData.dataload();
     int choice;
     do {
-        system("clear");
+        // system("clear");
         cout << "=================================" << endl;
         cout << "           Home Page           " << endl;
         cout << "=================================" << endl;
@@ -38,6 +38,7 @@ int main() {
                     {
                         User user;
                         user.login();
+                        
                     }
                     break;
                 case 2:
