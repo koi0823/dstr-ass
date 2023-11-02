@@ -9,36 +9,65 @@ using namespace std;
 struct WeeklyDataNode {
     string state;
     int year, week, numOfDengueCases;
-    WeeklyDataNode* next;
-    WeeklyDataNode* prev;
+    WeeklyDataNode* left;
+    WeeklyDataNode* right;
 
     WeeklyDataNode(const string& state, int year, int week, int numOfDengueCases)
-        : state(state), year(year), week(week), numOfDengueCases(numOfDengueCases), next(nullptr), prev(nullptr) {}
+        : state(state), year(year), week(week), numOfDengueCases(numOfDengueCases), left(nullptr), right(nullptr) {}
+
+    string getKey() const {
+        return state + to_string(year);
+    }
 };
 
-class WeeklyDataList {
-public:
-    WeeklyDataNode* head;
-    WeeklyDataNode* tail;
-    static WeeklyDataList* instance;
+class WeeklyDataBST {
+private:
+    WeeklyDataNode* root;
 
-    WeeklyDataList() : head(nullptr), tail(nullptr) {}
-
-    static WeeklyDataList* getInstance() {
-        if (!instance) {
-            instance = new WeeklyDataList();
+    void insert(WeeklyDataNode*& node, const string& state, int year, int week, int numOfDengueCases) {
+        string key = state + to_string(year);
+        if (!node) {
+            node = new WeeklyDataNode(state, year, week, numOfDengueCases);
+        } else if (key < node->getKey()) {
+            insert(node->left, state, year, week, numOfDengueCases);
+        } else if (key > node->getKey()) {
+            insert(node->right, state, year, week, numOfDengueCases);
+        } else {
+            // Handle the case where the key is the same. You might want to update the data or handle it differently.
         }
-        return instance;
     }
 
+
+    void display(WeeklyDataNode* node) const {
+        if (!node) return;
+        display(node->left);
+        cout << "State: " << node->state
+             << ", Year: " << node->year
+             << ", Week: " << node->week
+             << ", Number Dengue Cases: " << node->numOfDengueCases << endl;
+        display(node->right);
+    }
+
+    void clear(WeeklyDataNode*& node) {
+        if (!node) return;
+        clear(node->left);
+        clear(node->right);
+        delete node;
+        node = nullptr;
+    }
+
+public:
+    WeeklyDataBST() : root(nullptr) {}
+
     void insert(const string& state, int year, int week, int numOfDengueCases) {
-        WeeklyDataNode* newNode = new WeeklyDataNode(state, year, week, numOfDengueCases);
-        if (!tail) {
-            head = tail = newNode;
+        insert(root, state, year, week, numOfDengueCases);
+    }
+
+    void display() const {
+        if (!root) {
+            cout << "The tree is empty." << endl;
         } else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+            display(root);
         }
     }
 
@@ -57,6 +86,7 @@ public:
             istringstream sline(line);
             string cell;
             int col_index = 0, year, week, numOfDengueCases;
+            string state;
 
             while (getline(sline, cell, ',')) {
                 if (row_index == 0 && col_index >= 2) {
@@ -71,7 +101,6 @@ public:
                 } else if (col_index == 1) {
                     try {
                         week = stoi(cell);
-                        
                     } catch (const std::invalid_argument& e) {
                         cerr << "Invalid week: " << cell << endl;
                         week = 0; // Handle the error by setting a default value.
@@ -92,56 +121,7 @@ public:
         file.close();
     }
 
-void display() const {
-    if (!head) {
-        cout << "The list is empty." << endl;
-        return;
-    }
-
-    WeeklyDataNode* current = head;
-    while (current) {
-        cout << "State: " << current->state
-             << ", Year: " << current->year
-             << ", Week: " << current->week
-             << ", Number Dengue Cases: " << current->numOfDengueCases;
-
-        // Check if the "Number Dengue Cases" value contains a line break character
-        if (current->numOfDengueCases >= 10) {
-            cout << "\n";
-        } else {
-            cout << endl;
-        }
-
-        current = current->next;
-    }
-}
-
-
-    WeeklyDataList searchCasesMoreThan(int threshold) const {
-        WeeklyDataList result;
-        if (!head) return result;
-
-        WeeklyDataNode* current = head;
-        while (current) {
-            if (current->numOfDengueCases > threshold) {
-                result.insert(current->state, current->year, current->week, current->numOfDengueCases);
-            }
-            current = current->next;
-        }
-        return result;
-    }
-
-    bool empty() const {
-        return !head;
-    }
-
-    ~WeeklyDataList() {
-        while (head) {
-            WeeklyDataNode* temp = head;
-            head = head->next;
-            delete temp;
-        }
+    ~WeeklyDataBST() {
+        clear(root);
     }
 };
-
-WeeklyDataList* WeeklyDataList::instance = nullptr;
