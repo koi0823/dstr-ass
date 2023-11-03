@@ -136,14 +136,5 @@ public:
                 << left << setw(weekWidth) << node->week
                 << left << setw(casesWidth) << node->numOfDengueCases << endl;
         }
-
-        // Clean up the nodes that were created in auxStack
-        for (auto* node : tempNodes) {
-            delete node;
-        }
-    }
-
-
-
-    
+    }    
 };
