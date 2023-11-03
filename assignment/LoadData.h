@@ -4,19 +4,8 @@
 using namespace std;
 
 class LoadData{
-private:
-    string correctId = "2";
-    string correctPass = "2222";
     
 public:
-    
-    string getCorrectId() const {
-        return correctId;
-    }
-
-    string getCorrectPass() const {
-        return correctPass;
-    }
 
     void dataload() {
         
@@ -30,6 +19,7 @@ public:
         weeklyDataTree.display();
         cout << "=======================================================" << endl;
 
+        
         // Load Annual Data
         AnnualDataList* annualDataList = AnnualDataList::getInstance();
         string file_path2 = "/Users/klin/Documents/GitHub/dstr-ass/assignment/Annual number of dengue cases by state.csv";

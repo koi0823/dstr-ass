@@ -10,12 +10,12 @@ using namespace std;
 
 int main() {
     LoadData loadData;
-    loadData.dataload();  // Assuming this initializes some data needed for login
+    loadData.dataload();
     int choice;
-    // system("clear");
     do {
+        // system("clear");
         cout << "=================================" << endl;
-        cout << "           Home Page             " << endl;
+        cout << "           Home Page           " << endl;
         cout << "=================================" << endl;
         cout << "1. User" << endl;
         cout << "2. Doctor" << endl;
@@ -23,38 +23,42 @@ int main() {
         cout << "0. Exit Program" << endl;
         cout << "Please select your choice: ";
 
+        // Ensure the input is valid (an integer)
         while (!(cin >> choice)) {
-            cout << "Invalid input. Please enter a number between 0 and 3." << endl;
+            cout << "Invalid input. Please enter a valid choice (0, 1, 2, 3): "<<endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
-        switch (choice) {
-            case 1:
-                {
-                    User user;
-                    user.login();
-                }
-                break;
-            case 2:
-                {
-                    Doctor doctor;
-                    doctor.login(loadData);
-                }
-                break;
-            case 3:
-                {
-                    MOHAdmin mohAdmin;
-                    mohAdmin.login(loadData);
-                }
-                break;
-            case 0:
-                cout << "\nThank You for using our system!" << endl;
-                cout << "Exiting program..." << endl;
-                break;
-            default:
-                cout << "Invalid choice. Please enter a number between 0 and 3." << endl;
-                break;
+        if (choice < 0 || choice > 3) {
+            cout << "Invalid choice. Please enter a valid choice (0, 1, 2, 3): "<<endl;
+        } else {
+            switch (choice) {
+                case 1:
+                    {
+                        User user;
+                        user.login();
+                        
+                    }
+                    break;
+                case 2:
+                    {
+                        Doctor doctor;
+                        doctor.login();
+                    }
+                    break;
+                case 3:
+                    {
+                        MOHAdmin mohAdmin;
+                        mohAdmin.login();
+                    }
+                    break;
+                case 0:
+                    cout << "" << endl;
+                    cout << "Thank You for using our system" << endl;
+                    cout << "Exiting program..." << endl;
+                    break;
+            }
         }
     } while (choice != 0);
 
