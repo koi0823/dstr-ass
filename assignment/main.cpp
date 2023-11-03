@@ -39,13 +39,13 @@ int main() {
             case 2:
                 {
                     Doctor doctor;
-                    doctor.login();
+                    doctor.login(loadData);
                 }
                 break;
             case 3:
                 {
                     MOHAdmin mohAdmin;
-                    mohAdmin.login();
+                    mohAdmin.login(loadData);
                 }
                 break;
             case 0:
