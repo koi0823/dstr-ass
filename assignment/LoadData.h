@@ -8,28 +8,28 @@ class LoadData{
 public:
     void dataload() {
         
-        WeeklyDataBST weeklyDataTree;
+        WeeklyDataStack weeklyDataTree;
         string file_path1 = "/Users/klin/Documents/GitHub/dstr-ass/assignment/Number of dengue fever cases weekly by state.csv";
         weeklyDataTree.loadFromCSV(file_path1);
 
         cout << "=======================================================" << endl;
         cout << "                   Data Loaded           " << endl;
         cout << "=======================================================" << endl;
-        weeklyDataTree.displayAllData();
+        weeklyDataTree.display();
         cout << "=======================================================" << endl;
 
         
-        // // Load Annual Data
-        // AnnualDataList* annualDataList = AnnualDataList::getInstance();
-        // string file_path2 = "/Users/klin/Documents/GitHub/dstr-ass/assignment/Annual number of dengue cases by state.csv";
-        // annualDataList->loadFromCSV(file_path2);
+        // Load Annual Data
+        AnnualDataList* annualDataList = AnnualDataList::getInstance();
+        string file_path2 = "/Users/klin/Documents/GitHub/dstr-ass/assignment/Annual number of dengue cases by state.csv";
+        annualDataList->loadFromCSV(file_path2);
 
-        // // Display the loaded data
-        // cout << "=======================================================" << endl;
-        // cout << "                   Data Loaded           " << endl;
-        // cout << "=======================================================" << endl;
-        // annualDataList->display();
-        // cout << "=======================================================" << endl;
+        // Display the loaded data
+        cout << "=======================================================" << endl;
+        cout << "                   Data Loaded           " << endl;
+        cout << "=======================================================" << endl;
+        annualDataList->display();
+        cout << "=======================================================" << endl;
 
     }
 
