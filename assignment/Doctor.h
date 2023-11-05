@@ -1,53 +1,56 @@
 #include <iostream>
 #include <string>
+#include "WeeklyData.h"  
 
 using namespace std;
 
 class Doctor {
+WeeklyDataStack myWeeklyData;
+
 public:
     Doctor() {
         // Constructor implementation
     }
 
-void login() {
-    string inputId, inputPass;
-    const string correctId = "2";
-    const string correctPass = "2222";
-    bool loginSuccess = false;
+    void login() {
+        string inputId, inputPass;
+        const string correctId = "2";
+        const string correctPass = "2222";
+        bool loginSuccess = false;
 
-    while (!loginSuccess) {
-        system("clear");
-        cout << "=================================" << endl;
-        cout << "          Log in Doctor" << endl;
-        cout << "=================================" << endl;
+        while (!loginSuccess) {
+            system("clear");
+            cout << "=================================" << endl;
+            cout << "          Log in Doctor" << endl;
+            cout << "=================================" << endl;
 
-        while (true) {
-            cout << "ID: ";
-            cin >> inputId;
+            while (true) {
+                cout << "ID: ";
+                cin >> inputId;
 
-            if (inputId == correctId) {
-                break;
-            } else {
-                cout << "Invalid ID. Please try again." << endl;
+                if (inputId == correctId) {
+                    break;
+                } else {
+                    cout << "Invalid ID. Please try again." << endl;
+                }
             }
-        }
 
-        while (true) {
-            cout << "Pass: ";
-            cin >> inputPass;
+            while (true) {
+                cout << "Pass: ";
+                cin >> inputPass;
 
-            if (inputPass == correctPass) {
-                loginSuccess = true;
-                setId(inputId);
-                setPassword(inputPass);
-                mainMenu();
-                break;
-            } else {
-                cout << "Invalid Password. Please try again." << endl;
+                if (inputPass == correctPass) {
+                    loginSuccess = true;
+                    setId(inputId);
+                    setPassword(inputPass);
+                    mainMenu();
+                    break;
+                } else {
+                    cout << "Invalid Password. Please try again." << endl;
+                }
             }
         }
     }
-}
 
 
     void mainMenu() {
@@ -75,6 +78,7 @@ void login() {
                     break;
                 case 3:
                     viewAllDengueCases();
+                    myWeeklyData.display();
                     break;
                 case 4:
                     findDenguesOfCases();
