@@ -39,7 +39,7 @@ int main() {
                 case 1:
                     {
                         User user;
-                        user.login();
+                        user.initialMenu();
                         
                     }
                     break;
@@ -64,4 +64,9 @@ int main() {
     } while (choice != 0);
 
     return 0;
+
+    User user;
+    user.initialMenu();
+    user.initializeCredentials();
+    user.login();
 }

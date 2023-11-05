@@ -148,6 +148,18 @@ public:
         }
         return totalCases;
     }
+
+    int getTotalDengueCasesForState(const string& inputState) const {
+        int totalCases = 0;
+        for (AnnualDataNode* current = head; current; current = current->next) {
+            if (current->state == inputState) {
+                totalCases += current->numOfDengueCases;
+            }
+        }
+        return totalCases;
+    }
+
+    
 };
 
 AnnualDataList* AnnualDataList::instance = nullptr;
