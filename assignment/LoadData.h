@@ -28,15 +28,15 @@ public:
         cout << "=======================================================" << endl;
 
         
-        // Load Annual Data
-        AnnualDataList* annualDataList = AnnualDataList::getInstance();
-        annualDataList->loadFromCSV(getAnnualDataFilePath());
-        // Display the loaded data
-        cout << "=======================================================" << endl;
-        cout << "                   Data Loaded           " << endl;
-        cout << "=======================================================" << endl;
-        annualDataList->display();
-        cout << "=======================================================" << endl;
+        // // Load Annual Data
+        // AnnualDataList* annualDataList = AnnualDataList::getInstance();
+        // annualDataList->loadFromCSV(getAnnualDataFilePath());
+        // // Display the loaded data
+        // cout << "=======================================================" << endl;
+        // cout << "                   Data Loaded           " << endl;
+        // cout << "=======================================================" << endl;
+        // annualDataList->display();
+        // cout << "=======================================================" << endl;
 
     }
     void setWeeklyDataFilePath(const string& path) {

@@ -1,6 +1,3 @@
-#ifndef WEEKLYDATA_H
-#define WEEKLYDATA_H
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -69,14 +66,23 @@ public:
         int year, week, numOfDengueCases;
 
         while (getline(file, line)) {
-            istringstream sline(line);
-            string cell;
-            int col_index = 0;
+            if (row_index == 0) { // Process the header row
+                istringstream sline(line);
+                string cell;
+                int col_index = 0; // Initialize col_index here
 
-            while (getline(sline, cell, ',')) {
-                if (row_index == 0 && col_index >= 2) {
-                    states.push_back(cell);
-                } else if (row_index > 0) {  // Skipping the header row
+                while (getline(sline, cell, ',')) {
+                    if (col_index >= 2) {
+                        states.push_back(cell);
+                    }
+                    col_index++;
+                }
+            } else { // Process data rows
+                istringstream sline(line);
+                string cell;
+                int col_index = 0;
+
+                while (getline(sline, cell, ',')) {
                     if (col_index == 0) {
                         year = stoi(cell);
                     } else if (col_index == 1) {
@@ -86,8 +92,8 @@ public:
                         // Here we're using the state name from the header, matched with the index of the current cell.
                         push(states[col_index - 2], year, week, numOfDengueCases);
                     }
+                    col_index++;
                 }
-                col_index++;
             }
             row_index++;
         }
@@ -142,7 +148,17 @@ public:
                 << left << setw(weekWidth) << node->week
                 << left << setw(casesWidth) << node->numOfDengueCases << endl;
         }
-    }    
+
+        // Cleanup tempNodes to avoid memory leaks
+        for (WeeklyDataNode* node : tempNodes) {
+            delete node;
+        }
+    }
 };
 
-#endif // WEEKLYDATA_H
+int main() {
+    WeeklyDataStack weeklyData;
+    weeklyData.loadFromCSV("your_weekly_data.csv"); // Replace with your file path
+    weeklyData.display();
+    return 0;
+}
