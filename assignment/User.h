@@ -34,7 +34,6 @@ public:
                     break;
                 case 3:
                     cout << "Exiting..." << endl;
-                    exit(0);
                 default:
                     cout << "Invalid choice. Please enter 1, 2, or 3." << endl;
                     break;
@@ -156,9 +155,8 @@ private:
 
         switch (choice) {
             case 1:
-                cout << "Enter new state of residence: ";
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Flush the newline out of the buffer
-                getline(cin, stateOfResidence);
+                system("clear");
+                changeCurrentState();
                 break;
             case 2:
                 cout << "Enter new phone number: ";
@@ -183,6 +181,43 @@ private:
     } while (choice != 5);
 }
      
+    void changeCurrentState() {
+    int option;
+    do {
+        cout << "Select the new Current State of Residence:" << endl;
+        cout << "1. JOHOR\n";
+        cout << "2. KEDAH\n";
+        cout << "3. KELANTAN\n";
+        cout << "4. MELAKA\n";
+        cout << "5. NEGERI SEMBILAN\n";
+        cout << "6. PAHANG\n";
+        cout << "7. PERLIS\n";
+        cout << "8. PULAU PINANG\n";
+        cout << "9. SABAH\n";
+        cout << "10. SARAWAK\n";
+        cout << "11. SELANGOR\n";
+        cout << "12. TERENGGANU\n";
+        cout << "13. WP KUALA LUMPUR\n";
+        cout << "14. WP LABUAN\n";
+        cout << "Enter your choice: ";
+        cin >> option;
+        system("clear");
+
+        if (option >= 1 && option <= 14) {
+            const string states[] = {
+                "JOHOR", "KEDAH", "KELANTAN", "MELAKA", "NEGERI SEMBILAN",
+                "PAHANG", "PERLIS", "PULAU PINANG", "SABAH", "SARAWAK", "SELANGOR",
+                "TERENGGANU", "WP KUALA LUMPUR", "WP LABUAN"
+            };
+            stateOfResidence = states[option - 1];
+            cout << "Current State of Residence changed to: " << stateOfResidence << endl;
+            return;
+        } else {
+            cout << "Invalid choice. Please enter a number between 1 and 14." << endl;
+        }
+    } while (true);
+
+}
 
     void viewTotalDengueCases() {
         cout << "Viewing total dengue cases..." << endl;
