@@ -15,7 +15,11 @@ void viewWeeklyCases() {
     int week;
 
     LoadData loadData;
-    loadData.dataload(); // Load the data
+
+    if (myWeeklyData.empty()) {
+        loadData.dataload(); // Load the data
+        myWeeklyData = loadData.getWeeklyData();
+    }
     system("clear");
 
     // Array of year names
@@ -36,7 +40,7 @@ void viewWeeklyCases() {
         }
     } while (year < 1 || year > 4);
     cout << " " << endl;
-    system("clear");
+    // system("clear");
 
     // Determine the number of weeks for the selected year
     int weeksInYear = (year == 3) ? 53 : 52;
@@ -59,21 +63,31 @@ void viewWeeklyCases() {
     } while (week < 1 || week > weeksInYear);
 
     // Display the selected year and week
-    system("clear");
+    // system("clear");
     cout << "Displaying the amount of cases in the year " << yearNames[year - 1] << ", week " << week << ":" << endl;
 
-    // Create a copy of myWeeklyData to maintain the original stack
+    // Call debugDisplay to check the contents of myWeeklyData
+    if (!myWeeklyData.empty()) {
+        cout << "Debug Display of Weekly Data:" << endl;
+        myWeeklyData.debugDisplay();
+    } else {
+        cout << "No data available in myWeeklyData." << endl;
+    }
+
     // Create a copy of myWeeklyData to maintain the original stack
     WeeklyDataStack tempStack = myWeeklyData;
 
-    // Filter and display data for the selected year and week
     bool found = false; // To check if any data was found
+
     while (!tempStack.empty()) {
         WeeklyDataNode* weeklyRecord = tempStack.pop();
+        
         if (weeklyRecord->year == year && weeklyRecord->week == week) {
             // Display the data for this record
             cout << "Week " << weeklyRecord->week << " (" << weeklyRecord->year << "): " << weeklyRecord->numOfDengueCases << " cases" << endl;
             found = true;
+            // Break the loop once you find a matching record
+            break;
         }
     }
 
@@ -81,7 +95,9 @@ void viewWeeklyCases() {
         cout << "No data found for the selected year and week." << endl;
     }
 
+
 }
+
 
 
 };

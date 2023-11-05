@@ -67,6 +67,9 @@ public:
 
         while (getline(file, line)) {
             if (row_index == 0) { // Process the header row
+                // Debug: Print the header row
+                cout << "Header row: " << line << endl;
+
                 istringstream sline(line);
                 string cell;
                 int col_index = 0; // Initialize col_index here
@@ -78,6 +81,9 @@ public:
                     col_index++;
                 }
             } else { // Process data rows
+                // Debug: Print the data rows
+                cout << "Data row: " << line << endl;
+
                 istringstream sline(line);
                 string cell;
                 int col_index = 0;
@@ -102,8 +108,16 @@ public:
         // Debug output
         cout << "Loaded " << row_index << " rows of data." << endl;
     }
+    void debugDisplay() const {
+        WeeklyDataNode* current = top;
+        while (current) {
+            cout << "Year: " << current->year << ", Week: " << current->week << ", State: " << current->state << ", Cases: " << current->numOfDengueCases << endl;
+            current = current->next;
+        }
+    }
 
-    void display() const {
+
+    void display(int year, int week) const {
         if (!top) {
             cout << "The stack is empty." << endl;
             return;
@@ -129,8 +143,7 @@ public:
         WeeklyDataStack auxStack;
         WeeklyDataNode* current = top;
         while (current) {
-            // Check if the state is not empty
-            if (!current->state.empty()) {
+            if (current->year == year && current->week == week) {
                 auxStack.push(current->state, current->year, current->week, current->numOfDengueCases);
             }
             current = current->next;
@@ -156,9 +169,3 @@ public:
     }
 };
 
-int main() {
-    WeeklyDataStack weeklyData;
-    weeklyData.loadFromCSV("your_weekly_data.csv"); // Replace with your file path
-    weeklyData.display();
-    return 0;
-}
