@@ -177,6 +177,6 @@ private :
         FindDenguebyAgeState findDengueCasesAgeState;
 
         // Call the function to find cases by age and state
-        findDengueCasesAgeState.findDengueCasesByAgeAndState(cases);
+        findDengueCasesAgeState.findDengueCasesByAgeAndState();
     }
 };

@@ -14,29 +14,31 @@ private:
 
 public:
     WeeklyDataStack weeklyData;
+    AnnualDataList annualDataList;
+
 
     void dataload() {
 
         setWeeklyDataFilePath("/Users/klin/Documents/GitHub/dstr-ass/assignment/Number of dengue fever cases weekly by state.csv");
         setAnnualDataFilePath("/Users/klin/Documents/GitHub/dstr-ass/assignment/Annual number of dengue cases by state.csv");
         
-        weeklyData.loadFromCSV(getWeeklyDataFilePath());
-        cout << "=======================================================" << endl;
-        cout << "                   Data Loaded           " << endl;
-        cout << "=======================================================" << endl;
-        weeklyData.display();
-        cout << "=======================================================" << endl;
-
-        
-        // // Load Annual Data
-        // AnnualDataList* annualDataList = AnnualDataList::getInstance();
-        // annualDataList->loadFromCSV(getAnnualDataFilePath());
-        // // Display the loaded data
+        // weeklyData.loadFromCSV(getWeeklyDataFilePath());
         // cout << "=======================================================" << endl;
         // cout << "                   Data Loaded           " << endl;
         // cout << "=======================================================" << endl;
-        // annualDataList->display();
+        // weeklyData.display();
         // cout << "=======================================================" << endl;
+
+        
+        // Load Annual Data
+        AnnualDataList* annualDataList = AnnualDataList::getInstance();
+        annualDataList->loadFromCSV(getAnnualDataFilePath());
+        // Display the loaded data
+        cout << "=======================================================" << endl;
+        cout << "                   Data Loaded           " << endl;
+        cout << "=======================================================" << endl;
+        annualDataList->display();
+        cout << "=======================================================" << endl;
 
     }
     void setWeeklyDataFilePath(const string& path) {
@@ -55,9 +57,15 @@ public:
         return annualDataFilePath;
     }
     
-        WeeklyDataStack& getWeeklyData() {
+    WeeklyDataStack& getWeeklyData() {
         return weeklyData;
     }
+
+    AnnualDataList& getAnnualData() {
+        return annualDataList;
+    }
+
+
 };
 
 #endif // LOADDATA_H

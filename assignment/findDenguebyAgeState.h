@@ -1,15 +1,36 @@
 #include <iostream>
 #include <vector>
-#include "patientReport.h"
+#include "LoadData.h"
 
 using namespace std;
 
 class FindDenguebyAgeState {
 public:
-    static void findDengueCasesByAgeAndState(const vector<PatientReport>& cases) {
+    static void findDengueCasesByAgeAndState() {
         int ageOption;
         int stateOption;
+        int yearIndex; // Declare yearIndex variable
+        string yearNames[] = {"2018", "2019", "2020", "2021"};
 
+        // Prompt the user to select a year
+        cout << "Enter the year:" << endl;
+        for (int i = 0; i < 4; i++) {
+            cout << i + 1 << ". " << yearNames[i] << endl;
+        }
+
+        do {
+            cout << "Year choice (1-4): ";
+            cin >> yearIndex;
+
+            if (yearIndex < 1 || yearIndex > 4) {
+                cout << "Invalid input. Please choose a valid year (1-4)." << endl;
+            }
+        } while (yearIndex < 1 || yearIndex > 4);
+
+        // Convert the selected year to an integer
+        int selectedYear = stoi(yearNames[yearIndex - 1]);
+
+        system("clear");
         // Display age range options
         cout << "Input the age range:" << endl;
         displayAgeOptions();
@@ -21,7 +42,6 @@ public:
         cout << "Input the state range:" << endl;
         displayStateOptions();
 
-
         // Get the user's state range option
         stateOption = getUserOption(1, 14);
 
@@ -29,10 +49,13 @@ public:
         string ageRange = getAgeRange(ageOption);
         string stateRange = getStateRange(stateOption);
 
-        int numberOfCases = countCasesByAgeAndState(cases, ageRange, stateRange);
+        int numberOfCases = countCasesByAgeAndState(selectedYear, ageRange, stateRange); // Pass the selected year
 
-        cout << "Displaying the number of cases in the age of " << ageRange << " and in " << stateRange << ": " << numberOfCases << "." << endl;
-    }
+        cout << "Selected Year: " << selectedYear << endl;
+        cout << "Selected Age Range: " << ageRange << endl;
+        cout << "Selected State Range: " << stateRange << endl;        
+        cout << "Number of cases: " << numberOfCases << endl;
+        }
 
 private:
     static void displayAgeOptions() {
@@ -100,17 +123,22 @@ private:
         return stateRanges[stateOption - 1];
     }
 
-    static int countCasesByAgeAndState(const vector<PatientReport>& cases, const string& ageRange, const string& stateRange) {
-        int count = 0;
+    static int countCasesByAgeAndState(int selectedYear, const string& ageRange, const string& stateRange) {
+            // Access data from LoadData class and filter by selectedYear, ageRange, and stateRange
+            LoadData loadData;
+            loadData.dataload();
+            AnnualDataList& annualDataList = loadData.getAnnualData();
 
-        for (const PatientReport& report : cases) {
-            if (report.getPatientAge() == ageRange && report.getPatientState() == stateRange) {
-                count++;
+            system("clear");
+
+            int count = 0;
+
+            for (const AnnualDataNode* current = annualDataList.head; current; current = current->next) {
+                if (current->year == selectedYear && current->age == ageRange && current->state == stateRange) {
+                    count += current->numOfDengueCases;
+                }
             }
+
+            return count;
         }
-
-        return count;
-    }
 };
-
-
