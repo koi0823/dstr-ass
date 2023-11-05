@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "WeeklyData.h"  
+#include "LoadData.h"
 
 using namespace std;
 
@@ -11,6 +11,9 @@ public:
     Doctor() {
         // Constructor implementation
     }
+
+    string id;       // Note: No need for std:: prefix
+    string password; // Note: No need for std:: prefix
 
     void login() {
         string inputId, inputPass;
@@ -56,7 +59,7 @@ public:
     void mainMenu() {
         int choice;
         do {
-            system("clear");
+            
             cout << "=================================" << endl;
             cout << "        Main Menu (Doctor)\n";
             cout << "=================================" << endl;
@@ -68,6 +71,7 @@ public:
             cout << "6. Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
+            system("clear");
 
             switch (choice) {
                 case 1:
@@ -77,8 +81,7 @@ public:
                     reportPatient();
                     break;
                 case 3:
-                    viewAllDengueCases();
-                    myWeeklyData.display();
+                    loadDataAndDisplay();
                     break;
                 case 4:
                     findDenguesOfCases();
@@ -110,10 +113,22 @@ public:
     string getPassword() const {
         return password;
     }
+    
+    void loadData() {
+        // Create an instance of LoadData
+        LoadData loadData;
 
-private:
-    string id;       // Note: No need for std:: prefix
-    string password; // Note: No need for std:: prefix
+        // Load the data into myWeeklyData
+        loadData.dataload();
+        myWeeklyData = loadData.getWeeklyData(); // Load the weekly data
+
+        // Display the loaded data
+        cout << "=======================================================" << endl;
+        cout << "                   Data Loaded           " << endl;
+        cout << "=======================================================" << endl;
+        myWeeklyData.display(); // Display the weekly data
+        cout << "=======================================================" << endl;
+    }
 
     void manageProfile() {
         // Implement manage profile Doctor
@@ -125,9 +140,8 @@ private:
         cout << "Reporting patient..." << endl;
     }
 
-    void viewAllDengueCases() {
-        // Implement view all Dengue cases
-        cout << "Viewing all Dengue cases..." << endl;
+    void loadDataAndDisplay() {
+        myWeeklyData.display();
     }
 
     void findDenguesOfCases() {

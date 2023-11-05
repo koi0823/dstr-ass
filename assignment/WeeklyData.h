@@ -1,3 +1,6 @@
+#ifndef WEEKLYDATA_H
+#define WEEKLYDATA_H
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -54,42 +57,45 @@ public:
     }
 
     void loadFromCSV(const string& file_path) {
-    ifstream file(file_path);
-    if (!file.is_open()) {
-        cerr << "Error opening file" << endl;
-        return;
-    }
-
-    string line;
-    vector<string> states;
-    int row_index = 0;
-    int year, week, numOfDengueCases;
-
-    while (getline(file, line)) {
-        istringstream sline(line);
-        string cell;
-        int col_index = 0;
-
-        while (getline(sline, cell, ',')) {
-            if (row_index == 0 && col_index >= 2) {
-                states.push_back(cell);
-            } else if (row_index > 0) {  // Skipping the header row
-                if (col_index == 0) {
-                    year = stoi(cell);
-                } else if (col_index == 1) {
-                    week = stoi(cell);
-                } else if (col_index >= 2) {
-                    numOfDengueCases = stoi(cell);
-                    // Here we're using the state name from the header, matched with the index of the current cell.
-                    push(states[col_index - 2], year, week, numOfDengueCases);
-                }
-            }
-            col_index++;
+        ifstream file(file_path);
+        if (!file.is_open()) {
+            cerr << "Error opening file: " << file_path << endl;
+            return;
         }
-        row_index++;
+
+        string line;
+        vector<string> states;
+        int row_index = 0;
+        int year, week, numOfDengueCases;
+
+        while (getline(file, line)) {
+            istringstream sline(line);
+            string cell;
+            int col_index = 0;
+
+            while (getline(sline, cell, ',')) {
+                if (row_index == 0 && col_index >= 2) {
+                    states.push_back(cell);
+                } else if (row_index > 0) {  // Skipping the header row
+                    if (col_index == 0) {
+                        year = stoi(cell);
+                    } else if (col_index == 1) {
+                        week = stoi(cell);
+                    } else if (col_index >= 2) {
+                        numOfDengueCases = stoi(cell);
+                        // Here we're using the state name from the header, matched with the index of the current cell.
+                        push(states[col_index - 2], year, week, numOfDengueCases);
+                    }
+                }
+                col_index++;
+            }
+            row_index++;
+        }
+        file.close();
+
+        // Debug output
+        cout << "Loaded " << row_index << " rows of data." << endl;
     }
-    file.close();
-}
 
     void display() const {
         if (!top) {
@@ -138,3 +144,5 @@ public:
         }
     }    
 };
+
+#endif // WEEKLYDATA_H

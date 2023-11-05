@@ -1,3 +1,6 @@
+#ifndef ANNUALDATA_H
+#define ANNUALDATA_H
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -148,3 +151,5 @@ public:
 };
 
 AnnualDataList* AnnualDataList::instance = nullptr;
+
+#endif // ANNUALDATA_H
