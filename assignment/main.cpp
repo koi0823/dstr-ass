@@ -12,8 +12,10 @@ int main() {
     LoadData loadData;
     loadData.dataload();
     int choice;
+
+    Doctor doctor;
     do {
-        // system("clear");
+        system("clear");
         cout << "=================================" << endl;
         cout << "           Home Page           " << endl;
         cout << "=================================" << endl;
@@ -43,7 +45,6 @@ int main() {
                     break;
                 case 2:
                     {
-                        Doctor doctor;
                         doctor.login();
                     }
                     break;

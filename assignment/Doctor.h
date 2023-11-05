@@ -1,6 +1,13 @@
 #include <iostream>
 #include <string>
 #include "LoadData.h"
+#include "DoctorProfileManager.h"
+#include "patientReport.h"
+#include "findDenguebyName.h"
+#include "findDenguebyAgeState.h"
+#include "viewDengueCasesWeekly.h"
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -8,17 +15,13 @@ class Doctor {
 WeeklyDataStack myWeeklyData;
 
 public:
-    Doctor() {
-        // Constructor implementation
+     Doctor()
+        : id("2"), password("2222"), currentState("SABAH"), phoneNumber("0178901000"), doctorProfile(id, password, currentState, phoneNumber) {
+        // Default constructor implementation
     }
-
-    string id;       // Note: No need for std:: prefix
-    string password; // Note: No need for std:: prefix
 
     void login() {
         string inputId, inputPass;
-        const string correctId = "2";
-        const string correctPass = "2222";
         bool loginSuccess = false;
 
         while (!loginSuccess) {
@@ -31,7 +34,7 @@ public:
                 cout << "ID: ";
                 cin >> inputId;
 
-                if (inputId == correctId) {
+                if (inputId == id) {
                     break;
                 } else {
                     cout << "Invalid ID. Please try again." << endl;
@@ -42,10 +45,11 @@ public:
                 cout << "Pass: ";
                 cin >> inputPass;
 
-                if (inputPass == correctPass) {
+                if (inputPass == password) {
                     loginSuccess = true;
                     setId(inputId);
                     setPassword(inputPass);
+                    system("clear");
                     mainMenu();
                     break;
                 } else {
@@ -59,15 +63,14 @@ public:
     void mainMenu() {
         int choice;
         do {
-            
             cout << "=================================" << endl;
             cout << "        Main Menu (Doctor)\n";
             cout << "=================================" << endl;
             cout << "1. Manage profile Doctor\n";
             cout << "2. Report patient\n";
             cout << "3. View all Dengue cases\n";
-            cout << "4. Find dengues of cases\n";
-            cout << "5. Find Number of cases\n";
+            cout << "4. Find number of dengues cases base by patient name\n";
+            cout << "5. Find number of dengue cases base by age and range\n";
             cout << "6. Logout\n";
             cout << "Enter your choice: ";
             cin >> choice;
@@ -113,44 +116,67 @@ public:
     string getPassword() const {
         return password;
     }
-    
-    void loadData() {
-        // Create an instance of LoadData
-        LoadData loadData;
 
-        // Load the data into myWeeklyData
-        loadData.dataload();
-        myWeeklyData = loadData.getWeeklyData(); // Load the weekly data
-
-        // Display the loaded data
-        cout << "=======================================================" << endl;
-        cout << "                   Data Loaded           " << endl;
-        cout << "=======================================================" << endl;
-        myWeeklyData.display(); // Display the weekly data
-        cout << "=======================================================" << endl;
-    }
-
+private :
+    string id;
+    string password;
+    string currentState;
+    string phoneNumber;
+    string patientName;
+    string patientAge;
+    string infectionDate;
+    string patientState;
+    string doctorId;
+    string fever;
+    vector<PatientReport> cases;
+    DoctorProfileManager doctorProfile;
     void manageProfile() {
-        // Implement manage profile Doctor
         cout << "Managing Doctor profile..." << endl;
+        DoctorProfileManager profileManager(id, password, currentState, phoneNumber);
+        profileManager.manageProfile();
     }
 
     void reportPatient() {
-        // Implement report patient
         cout << "Reporting patient..." << endl;
+    
+        // Create an instance of the PatientReport class and call the reportPatient method
+        PatientReport patientReport(patientName, patientAge, infectionDate, patientState, doctorProfile, fever);
+        cases.push_back(patientReport);
     }
 
     void loadDataAndDisplay() {
-        myWeeklyData.display();
+        
+    // Implement view all Dengue cases
+    cout << "Viewing all Dengue cases..." << endl;
+    DengueCaseViewer viewDengueWeekly;
+    viewDengueWeekly.viewWeeklyCases();
+
     }
 
+
     void findDenguesOfCases() {
+        
         // Implement find dengues of cases
         cout << "Finding Dengues of cases..." << endl;
+        // Populate the patientCases vector with patient data
+        cout << "Enter the patient name to search for: ";
+        cin >> patientName;
+
+        for (const PatientReport& report : cases) {
+            cout << "Patient Name: " << report.getPatientName() << endl;
+    }
+
+        FindDenguebyName::findDenguesOfCases(patientName, cases);
     }
 
     void findNumberOfCases() {
         // Implement find Number of cases
         cout << "Finding Number of cases..." << endl;
+
+        // Create an instance of the FindDenguebyAgeState class
+        FindDenguebyAgeState findDengueCasesAgeState;
+
+        // Call the function to find cases by age and state
+        findDengueCasesAgeState.findDengueCasesByAgeAndState(cases);
     }
 };
