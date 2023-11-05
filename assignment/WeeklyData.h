@@ -117,7 +117,7 @@ public:
     }
 
 
-    void display(int year, int week) const {
+    void display() const {
         if (!top) {
             cout << "The stack is empty." << endl;
             return;
@@ -143,7 +143,8 @@ public:
         WeeklyDataStack auxStack;
         WeeklyDataNode* current = top;
         while (current) {
-            if (current->year == year && current->week == week) {
+            // Check if the state is not empty
+            if (!current->state.empty()) {
                 auxStack.push(current->state, current->year, current->week, current->numOfDengueCases);
             }
             current = current->next;
