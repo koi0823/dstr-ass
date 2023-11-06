@@ -49,13 +49,13 @@ public:
         string ageRange = getAgeRange(ageOption);
         string stateRange = getStateRange(stateOption);
 
-        int numberOfCases = countCasesByAgeAndState(selectedYear, ageRange, stateRange); // Pass the selected year
+        int numberOfCases = countCasesByAgeAndState(selectedYear, ageRange, stateRange); // Pass the selected criteria
 
         cout << "Selected Year: " << selectedYear << endl;
         cout << "Selected Age Range: " << ageRange << endl;
-        cout << "Selected State Range: " << stateRange << endl;        
+        cout << "Selected State Range: " << stateRange << endl;
         cout << "Number of cases: " << numberOfCases << endl;
-        }
+    }
 
 private:
     static void displayAgeOptions() {
@@ -128,7 +128,7 @@ private:
             LoadData loadData;
             loadData.dataload();
             AnnualDataList& annualDataList = loadData.getAnnualData();
-
+            AnnualDataList* datalist = AnnualDataList::getInstance();
             system("clear");
 
             int count = 0;

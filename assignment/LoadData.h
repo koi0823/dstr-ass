@@ -22,12 +22,12 @@ public:
         setWeeklyDataFilePath("/Users/klin/Documents/GitHub/dstr-ass/assignment/Number of dengue fever cases weekly by state.csv");
         setAnnualDataFilePath("/Users/klin/Documents/GitHub/dstr-ass/assignment/Annual number of dengue cases by state.csv");
         
-        // weeklyData.loadFromCSV(getWeeklyDataFilePath());
-        // cout << "=======================================================" << endl;
-        // cout << "                   Data Loaded           " << endl;
-        // cout << "=======================================================" << endl;
-        // weeklyData.display();
-        // cout << "=======================================================" << endl;
+        weeklyData.loadFromCSV(getWeeklyDataFilePath());
+        cout << "=======================================================" << endl;
+        cout << "                   Data Loaded           " << endl;
+        cout << "=======================================================" << endl;
+        weeklyData.display();
+        cout << "=======================================================" << endl;
 
         
         // Load Annual Data
