@@ -22,27 +22,9 @@ public:
         setAnnualDataFilePath("/Users/klin/Documents/GitHub/dstr-ass/assignment/Annual number of dengue cases by state.csv");
 
         weeklyData.loadFromCSV(getWeeklyDataFilePath());
-        cout << "=======================================================" << endl;
-        cout << "                   Data Loaded           " << endl;
-        cout << "=======================================================" << endl;
-        weeklyData.display();
-        cout << "=======================================================" << endl;
-
-        // Load Annual Data into both annualDataList and annualDataListNoPtr
         AnnualDataList* annualDataList = AnnualDataList::getInstance();
         annualDataList->loadFromCSV(getAnnualDataFilePath());
         annualDataListNoPtr.loadFromCSV(getAnnualDataFilePath());
-
-        // Display the loaded data
-        cout << "=======================================================" << endl;
-        cout << "                   Data Loaded (Using Pointer)          " << endl;
-        cout << "=======================================================" << endl;
-        annualDataList->display();
-
-        cout << "=======================================================" << endl;
-        cout << "                   Data Loaded (Without Pointer)       " << endl;
-        cout << "=======================================================" << endl;
-        annualDataListNoPtr.display();
     }
 
     void setWeeklyDataFilePath(const string& path) {
