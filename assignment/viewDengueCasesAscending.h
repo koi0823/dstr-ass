@@ -87,9 +87,11 @@ public:
             return;
         }
 
+        // Reverse the order of data nodes
+        std::reverse(selectedData.begin(), selectedData.end());
 
         cout << "=========================================" << endl;
-        cout << "  View all Dengue cases by " << year << ", week " << week << " (Sorted by Cases)" << endl;
+        cout << "  View all Dengue cases by " << year << ", week " << week << endl;
         cout << "=========================================" << endl;
 
         for (const WeeklyDataNode* node : selectedData) {
@@ -97,6 +99,7 @@ public:
         }
         cout << endl; // It's more standard to use 'endl' here for a new line
     }
+
 
 };
 
