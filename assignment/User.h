@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include <limits>
-// #include "UserFunction.h"
 #include "AnnualData.h"
 
 using namespace std;
@@ -90,7 +89,7 @@ public:
     void mainMenu() {
         int choice;
         do {
-            system("clear");
+            // system("clear");
 
             cout << "=================================" << endl;
             cout << "        Main Menu (User)" << endl;
@@ -262,15 +261,15 @@ private:
             // You will need to implement a method in the AnnualDataList class to support getting total cases by state.
             // For now, let's assume there is a method called getTotalDengueCasesForState(const string& state)
             for (const string& state : states) {
-                // This line assumes you have such a function defined and implemented in AnnualDataList
+                // Use a pointer to access the method
                 int totalCases = dataList->getTotalDengueCasesForState(state);
                 cout << "Total dengue cases for state " << state << ": " << totalCases << endl;
             }
         } else {
             cout << "Invalid choice." << endl;
         }
-    
     }
+
 
     void viewDailyDengueCases() {
     }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "LoadData.h"
+#include "AnnualData.h"
 
 using namespace std;
 
@@ -49,13 +50,15 @@ public:
         string ageRange = getAgeRange(ageOption);
         string stateRange = getStateRange(stateOption);
 
-        int numberOfCases = countCasesByAgeAndState(selectedYear, ageRange, stateRange); // Pass the selected criteria
+        bool useNoPtr = true;  // Initialize useNoPtr to true or false based on your logic
+        int numberOfCases = countCasesByAgeAndState(selectedYear, ageRange, stateRange, useNoPtr); // Pass the selected criteria
 
         cout << "Selected Year: " << selectedYear << endl;
         cout << "Selected Age Range: " << ageRange << endl;
         cout << "Selected State Range: " << stateRange << endl;
         cout << "Number of cases: " << numberOfCases << endl;
     }
+
 
 private:
     static void displayAgeOptions() {
@@ -123,22 +126,22 @@ private:
         return stateRanges[stateOption - 1];
     }
 
-    static int countCasesByAgeAndState(int selectedYear, const string& ageRange, const string& stateRange) {
-            // Access data from LoadData class and filter by selectedYear, ageRange, and stateRange
-            LoadData loadData;
-            loadData.dataload();
-            AnnualDataList& annualDataList = loadData.getAnnualData();
-            AnnualDataList* datalist = AnnualDataList::getInstance();
-            system("clear");
+    static int countCasesByAgeAndState(int selectedYear, const string& ageRange, const string& stateRange, bool useNoPtr) {
+        LoadData loadData;
+        loadData.dataload();
 
-            int count = 0;
+        AnnualDataList& annualDataList = useNoPtr ? loadData.getAnnualDataListNoPtr() : loadData.getAnnualData();
+        system("clear");
 
-            for (const AnnualDataNode* current = annualDataList.head; current; current = current->next) {
-                if (current->year == selectedYear && current->age == ageRange && current->state == stateRange) {
-                    count += current->numOfDengueCases;
-                }
+        int count = 0;
+
+        for (const AnnualDataNode* current = annualDataList.head; current; current = current->next) {
+            if (current->year == selectedYear && current->age == ageRange && current->state == stateRange) {
+                count += current->numOfDengueCases;
             }
-
-            return count;
         }
+
+        return count;
+    }
+
 };
