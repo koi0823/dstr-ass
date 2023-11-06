@@ -89,7 +89,6 @@ public:
     void mainMenu() {
         int choice;
         do {
-            // system("clear");
 
             cout << "=================================" << endl;
             cout << "        Main Menu (User)" << endl;
@@ -101,7 +100,7 @@ public:
             cout << "5. Logout" << endl;
             cout << "Enter your choice: ";
             cin >> choice;
-
+            system("clear");
             switch (choice) {
                 case 1:
                     manageProfile();
