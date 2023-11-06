@@ -114,7 +114,6 @@ public:
         }
     }
 
-
     void increaseDengueCases(int year, const string& age, const string& state) {
         for (AnnualDataNode* current = head; current; current = current->next) {
             if (current->year == year && current->age == age && current->state == state) {
