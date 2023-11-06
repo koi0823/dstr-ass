@@ -2,11 +2,15 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <map>
+#include <algorithm>
 #include "AnnualData.h"
+#include "patientReport.h"
 
 using namespace std;
 
 class User {
+    vector<PatientReport> cases;
 public:
     User() {}
 
@@ -121,6 +125,10 @@ public:
                     cout << "Invalid choice. Please enter a number between 1 and 5." << endl;
             }
         } while (choice != 5);
+    }
+    void displayDengueCasesReport() {
+            // You can add any necessary checks or preparations here before displaying the reports.
+            viewDailyDengueCases();
     }
 
 private:
@@ -271,6 +279,7 @@ private:
 
 
     void viewDailyDengueCases() {
+
     }
 
     void viewDengueCasesAlertMessage() {

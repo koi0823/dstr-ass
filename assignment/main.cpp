@@ -12,8 +12,8 @@ int main() {
     LoadData loadData;
     loadData.dataload();
     int choice;
-
     Doctor doctor;
+    MOHAdmin mohAdmin;
     do {
         system("clear");
         cout << "=================================" << endl;
@@ -50,7 +50,6 @@ int main() {
                     break;
                 case 3:
                     {
-                        MOHAdmin mohAdmin;
                         mohAdmin.login();
                     }
                     break;
@@ -64,6 +63,8 @@ int main() {
     } while (choice != 0);
 
     return 0;
+
+    std::vector<PatientReport> reportsVector;
 
     User user;
     user.initialMenu();

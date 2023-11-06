@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include "manageAccount.h"
+#include "DoctorProfileManager.h"
+#include "viewDengueCasesAscending.h"
 
 using namespace std;
 
@@ -53,7 +56,7 @@ void login() {
     void mainMenu() {
         int choice;
         do {
-            system("clear");
+            // system("clear");
             cout << "=================================" << endl;
             cout << "      Main Menu (MOH_admin)" << endl;
             cout << "=================================" << endl;
@@ -67,13 +70,13 @@ void login() {
 
             switch (choice) {
                 case 1:
-                    viewAllStateDengueCases();
+                    loadDataAndDisplay();
                     break;
                 case 2:
                     sendAlertMessageToUser();
                     break;
                 case 3:
-                    manageDoctorAccount();
+                    manageProfile();
                     break;
                 case 4:
                     manageUserAccount();
@@ -106,20 +109,30 @@ void login() {
 private:
     string id;
     string password;
+    string currentState;
+    string phoneNumber;
 
-    void viewAllStateDengueCases() {
-        // Implement view all state dengue cases
-        cout << "Viewing all state dengue cases..." << endl;
-    }
+    // void viewAllStateDengueCases() {
+    //     // Implement view all state dengue cases
+    //     cout << "Viewing all state dengue cases..." << endl;
+    // }
 
     void sendAlertMessageToUser() {
         // Implement send alert message to user
         cout << "Sending alert message to user..." << endl;
     }
 
-    void manageDoctorAccount() {
-        // Implement manage doctor account
-        cout << "Managing doctor account..." << endl;
+    void manageProfile() {
+        cout << "Managing Doctor profile..." << endl;
+        manageAccount profileManager(id, password, currentState, phoneNumber);
+        profileManager.manageProfile();
+    }
+
+    void loadDataAndDisplay() {        
+        // Implement view all Dengue cases
+        cout << "Viewing all Dengue cases..." << endl;
+        DengueViewer viewDengueWeekly;
+        viewDengueWeekly.viewWeeklyCases();
     }
 
     void manageUserAccount() {

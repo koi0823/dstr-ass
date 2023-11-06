@@ -2,6 +2,7 @@
 #include <string>
 #include "LoadData.h"
 #include "DoctorProfileManager.h"
+#include "manageAccount.h"
 #include "patientReport.h"
 #include "findDenguebyName.h"
 #include "findDenguebyAgeState.h"

@@ -50,6 +50,7 @@ public:
         cout << yearNames[yearIndex - 1] << " is chosen" << endl;
         cout << "Enter the week:" << endl;
         for (int i = 1; i <= weeksInYear; i++) {
+            
             cout << i << ". Week " << i << endl;
         }
 
