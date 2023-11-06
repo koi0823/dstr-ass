@@ -21,7 +21,7 @@ public:
             loadData.dataload(); // Load the data
             myWeeklyData = loadData.getWeeklyData();
         }
-        system("cls");
+        system("clear");
 
         // Array of year names
         string yearNames[] = {"2018", "2019", "2020", "2021"};
@@ -62,7 +62,7 @@ public:
                 cout << "Invalid input. Please choose a valid week (1-" << weeksInYear << ")." << endl;
             }
         } while (week < 1 || week > weeksInYear);
-        system("cls");
+        system("clear");
 
         // Display the data for the selected year and week
         displayWeeklyDataForYearAndWeek(selectedYear, week);
