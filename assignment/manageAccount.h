@@ -23,7 +23,7 @@ public:
             cout << "3. Go back to Main Menu\n";
             cout << "Enter your choice: ";
             cin >> choice;
-            system("cls");
+            system("clear");
 
             switch (choice) {
                 case 1:
@@ -38,7 +38,7 @@ public:
                         cout << "3. Go back to Main Menu\n";
                         cout << "Select an action: ";
                         cin >> action;
-                        system("cls");
+                        system("clear");
 
                         switch (action)
                         {
@@ -116,7 +116,7 @@ public:
         cout << "14. WP LABUAN\n";
         cout << "Enter your choice: ";
         cin >> option;
-        system("cls");
+        system("clear");
 
         if (option >= 1 && option <= 14) {
             const string states[] = {

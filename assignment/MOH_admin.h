@@ -56,7 +56,6 @@ void login() {
     void mainMenu() {
         int choice;
         do {
-            // system("clear");
             cout << "=================================" << endl;
             cout << "      Main Menu (MOH_admin)" << endl;
             cout << "=================================" << endl;
@@ -67,6 +66,7 @@ void login() {
             cout << "5. Logout" << endl;
             cout << "Enter your choice: ";
             cin >> choice;
+            system("clear");
 
             switch (choice) {
                 case 1:
